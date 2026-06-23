@@ -6,11 +6,17 @@ pipeline {
 
   stages {
     stage('CompileandRunSonarAnalysis') {
-      steps {
+      /*steps {
         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
           bat("mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.token=$SONAR_TOKEN -Dsonar.projectKey=easybuggy -Dsonar.host.url=http://localhost:9000/")
         }
+      }*/
+      steps {
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+          bat("mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar   -Dsonar.projectKey=easybugg -Dsonar.projectName='easybugg' -Dsonar.host.url=http://localhost:9000/ -Dsonar.token=$SONAR_TOKEN ")
+        }
       }
+      
     }
     stage('Build') {
       steps {
