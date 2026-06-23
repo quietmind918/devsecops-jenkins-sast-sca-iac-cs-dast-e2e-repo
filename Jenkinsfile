@@ -16,7 +16,7 @@ pipeline {
       steps {
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
           script {
-            app = docker.build("asecurityguru/testeb")
+            app = docker.build("quietmind918/testeb")
           }
         }
       }
@@ -26,7 +26,7 @@ pipeline {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           script {
             try {
-              bat("C:\\snyk\\snyk-win.exe  container test asecurityguru/testeb")
+              bat("C:\\tools\\snyk\\snyk-.exe  container test quietmind918/testeb")
             } catch (err) {
               echo err.getMessage()
             }
